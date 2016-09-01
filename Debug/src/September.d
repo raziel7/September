@@ -1,3 +1,8 @@
-src/September.o: ../src/September.cpp ../src/Graphs.h
+src/September.o: ../src/September.cpp ../src/Lists.h ../src/Trees.h \
+ ../src/Templates.h
 
-../src/Graphs.h:
+../src/Lists.h:
+
+../src/Trees.h:
+
+../src/Templates.h:

@@ -291,6 +291,85 @@ namespace Graphing
 		return mst;
 	}
 
+	static int searchLowestUnvisitedValue(int* tab, bool* color)
+	{
+		int minimum = numeric_limits<int>::max();
+		int tag = 0;
+
+		for(int i=0;i<size;i++)
+		{
+			if(tab[i]<minimum && !color[i])
+			{
+				minimum = tab[i];
+				tag = i;
+			}
+		}
+
+		return tag;
+	}
+
+	static graphNode* searchThroughGraph(graphNode* LE, int too, int dist)
+	{
+		graphNode* p = LE;
+
+		while(p->too != too || p->dist != dist)
+			p = p->next;
+
+		return p;
+	}
+
+	static graphNode* dijkstra(graphNode* LE)
+	{
+		graphNode* mst = NULL;
+		graphNode* tail = NULL;
+		graphNode* p = LE;
+		graphNode* smth = NULL;
+		int tag = 0;
+
+		bool* color = new bool[size];
+		int* distances = new int[size];
+		for(int i=0;i<size;i++)
+		{
+			color[i] = false;
+			distances[i] = numeric_limits<int>::max();
+		}
+
+		color[0] = true;
+		distances[0] = 0;
+
+		//
+		int checkFrom = p->from;
+
+		while(!fullColored(color))
+		{
+			if(p->from==checkFrom)
+			{
+				if(!color[p->too] && (p->dist+distances[p->from])<distances[p->too])
+					distances[p->too] = p->dist+distances[p->from];
+			}else
+			{
+				tag = searchLowestUnvisitedValue(distances, color);
+				smth = searchThroughGraph(LE, tag, distances[tag]);
+				addNodeToLe(mst, smth, tail);
+				p = getGraphNodeFrom(LE, tag);
+				color[p->from] = true;
+				checkFrom = p->from;
+			}
+			p = p->next;
+		}
+
+		return mst;
+	}
+
+	static graphNode* tests(graphNode* LE)
+	{
+		graphNode* mst = LE;
+		graphNode* p = mst->next;
+		p->dist = 123;
+
+		return mst;
+	}
+
 }
 
 #endif /* GRAPHS_H_ */
