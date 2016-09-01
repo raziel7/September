@@ -204,7 +204,7 @@ namespace Listing
 		int j = 0;
 		int x = 0;
 
-		while(i<=g && j<=h)
+		while(i<g && j<h)
 		{
 			if(leftArray[i]<rightArray[j])
 				list[x++] = leftArray[i++];
@@ -227,15 +227,19 @@ namespace Listing
 		{
 			int g = size/2;
 			int h = size-g;
+			int i;
 
 			int* leftArray = new int[g];
 			int* rightArray = new int[h];
 
-			for(int i=0;i<g;i++)
+			for(i=0;i<g;i++)
 				leftArray[i] = list[i];
 
-			for(int i=g;i<size;i++)
-				rightArray[i] = list[i];
+			for(int j=0;j<h;j++)
+			{
+				rightArray[j] = list[i++];
+			}
+
 
 			mergeSort(leftArray, g);
 			mergeSort(rightArray, h);
